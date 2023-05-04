@@ -4,32 +4,36 @@
 	<section class="section">
 		<div class="container">
 			<h1 class="title">Blog Flask</h1>
+			{% with messages = get_flashed_messages() %}
+        	{% if messages %}
+         	   <div class="notification is-danger">
+          	      {{ messages[0] }}
+      	       </div>
+     	    {% endif %}
+			{% endwith %}
 			<div class="columns">
 				<div class="column is-three-quarters">
-					<!-- Blog Post -->
-					<div class="box">
-						<h2 class="title is-4">Post Title</h2>
-						<h3 class="subtitle is-6">By John Doe on May 3, 2023</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo nisl ut ante commodo, ut sollicitudin nunc venenatis. Nam ut ligula suscipit, venenatis purus eu, vestibulum arcu. Duis ut pharetra libero. </p>
-					</div>
-					<!-- Blog Post -->
-					<div class="box">
-						<h2 class="title is-4">Post Title</h2>
-						<h3 class="subtitle is-6">By Jane Smith on May 2, 2023</h3>
-						<p>Nullam cursus, justo a vulputate maximus, sapien quam interdum nibh, vitae rhoncus risus nunc quis nisi. Nam in eros at massa vulputate fermentum non quis tortor. Sed non leo vitae sapien bibendum imperdiet.</p>
-					</div>
-					<!-- Blog Post -->
-					<div class="box">
-						<h2 class="title is-4">Post Title</h2>
-						<h3 class="subtitle is-6">By Bob Johnson on May 1, 2023</h3>
-						<p>Mauris at mauris tempor, imperdiet urna sed, pretium massa. Aliquam eget justo sit amet est rhoncus faucibus. Praesent nec neque non lectus semper convallis. Sed euismod dolor eu risus mollis ultricies.</p>
-					</div>
+					{% if blogs %}
+						{% for blog in blogs %}
+							<div class="box">
+								<h2 class="title is-4">{{ blog.title }}</h2>
+								<h3 class="subtitle is-6">By {{ blog.name }} on {{ blog.date_created.strftime("%Y-%m-%d %H:%M") }}</h3>
+								<p>{{ blog.content }}</p>
+								{% if current_user.email == blog.email %}
+									<br><p><a href="/delete/{{ blog.id }}">Delete</a>  <a href="/update/{{ blog.id }}">Update</a></p>
+								{% endif %}
+							</div>
+						{% endfor %}
+					{% endif %}
 				</div>
 				<div class="column">
 					<!-- Sidebar -->
 					<div class="box">
-						<h2 class="title is-4">Sidebar</h2>
-						<p>Some content here</p>
+						<h2 class="title is-4">Menu</h2>
+						<p><a href="{{ url_for('main.index') }}">Homepage</a></p>
+						<p>{% if current_user.is_authenticated %}<a href="{{ url_for('main.profile') }}">Profile</a>{% else %}<a href="{{ url_for('auth.login') }}">Login</a>/<a href="{{ url_for('auth.signup') }}">Signup</a>{% endif %}</p>
+						<p>{% if current_user.is_authenticated %}<a href="{{ url_for('blog.create') }}">Create blog</a>{% endif %}</p>
+						<p>{% if current_user.is_authenticated %}<a href="{{ url_for('auth.logout') }}">Logout</a>{% endif %}</p>
 					</div>
 				</div>
 			</div>

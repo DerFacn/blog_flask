@@ -32,3 +32,33 @@ def create_blog():
     db.session.commit()
 
     return redirect(url_for('main.index'))
+
+
+@blog.route('/delete/<int:id>')
+@login_required
+def delete(id):
+    blog_to_delete = Blog.query.get_or_404(id)
+    try:
+        db.session.delete(blog_to_delete)
+        db.session.commit()
+        return redirect(url_for('main.index'))
+    except:
+        flash('Something was wrong. Try again later')
+        return redirect(url_for('main.index'))
+
+
+@blog.route('/update/<int:id>', methods=['POST', 'GET'])
+@login_required
+def update(id):
+    update_blog = Blog.query.get_or_404(id)
+    if request.method == "POST":
+        update_blog.title = request.form['title']
+        update_blog.content = request.form['content']
+        try:
+            db.session.commit()
+            return redirect(url_for('main.index'))
+        except:
+            flash('Something was wrong.')
+            return redirect(url_for('blog.update'))
+    else:
+        return render_template('update.html', blog=update_blog)
