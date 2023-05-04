@@ -1,10 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  Flask Login Example
-</h1>
-<h2 class="subtitle">
-  Easy authentication and authorization in Flask.
-</h2>
+	<section class="section">
+		<div class="container">
+			<h1 class="title">Blog Flask</h1>
+			<div class="columns">
+				<div class="column is-three-quarters">
+					<!-- Blog Post -->
+					<div class="box">
+						<h2 class="title is-4">Post Title</h2>
+						<h3 class="subtitle is-6">By John Doe on May 3, 2023</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo nisl ut ante commodo, ut sollicitudin nunc venenatis. Nam ut ligula suscipit, venenatis purus eu, vestibulum arcu. Duis ut pharetra libero. </p>
+					</div>
+					<!-- Blog Post -->
+					<div class="box">
+						<h2 class="title is-4">Post Title</h2>
+						<h3 class="subtitle is-6">By Jane Smith on May 2, 2023</h3>
+						<p>Nullam cursus, justo a vulputate maximus, sapien quam interdum nibh, vitae rhoncus risus nunc quis nisi. Nam in eros at massa vulputate fermentum non quis tortor. Sed non leo vitae sapien bibendum imperdiet.</p>
+					</div>
+					<!-- Blog Post -->
+					<div class="box">
+						<h2 class="title is-4">Post Title</h2>
+						<h3 class="subtitle is-6">By Bob Johnson on May 1, 2023</h3>
+						<p>Mauris at mauris tempor, imperdiet urna sed, pretium massa. Aliquam eget justo sit amet est rhoncus faucibus. Praesent nec neque non lectus semper convallis. Sed euismod dolor eu risus mollis ultricies.</p>
+					</div>
+				</div>
+				<div class="column">
+					<!-- Sidebar -->
+					<div class="box">
+						<h2 class="title is-4">Sidebar</h2>
+						<p>Some content here</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 {% endblock %}
