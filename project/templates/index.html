@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<script type="module" src="https://md-block.verou.me/md-block.js"></script>
 	<section class="section">
 		<div class="container">
 			<h1 class="title">Blog Flask</h1>
@@ -12,31 +13,34 @@
      	    {% endif %}
 			{% endwith %}
 			<div class="columns">
-				<div class="column is-three-quarters">
-					{% if blogs %}
-						{% for blog in blogs %}
-							<div class="box">
-								<h2 class="title is-4">{{ blog.title }}</h2>
-								<h3 class="subtitle is-6">By {{ blog.name }} on {{ blog.date_created.strftime("%Y-%m-%d %H:%M") }}</h3>
-								<p>{{ blog.content }}</p>
-								{% if current_user.email == blog.email %}
-									<br><p><a href="/delete/{{ blog.id }}">Delete</a>  <a href="/update/{{ blog.id }}">Update</a></p>
-								{% endif %}
-							</div>
-						{% endfor %}
-					{% endif %}
-				</div>
-				<div class="column">
-					<!-- Sidebar -->
-					<div class="box">
-						<h2 class="title is-4">Menu</h2>
+                <div class="column is-one-fifth">
+                    <div class="box">
+                        <h2 class="title is-4">Menu</h2>
 						<p><a href="{{ url_for('main.index') }}">Homepage</a></p>
 						<p>{% if current_user.is_authenticated %}<a href="{{ url_for('main.profile') }}">Profile</a>{% else %}<a href="{{ url_for('auth.login') }}">Login</a>/<a href="{{ url_for('auth.signup') }}">Signup</a>{% endif %}</p>
 						<p>{% if current_user.is_authenticated %}<a href="{{ url_for('blog.create') }}">Create blog</a>{% endif %}</p>
 						<p>{% if current_user.is_authenticated %}<a href="{{ url_for('auth.logout') }}">Logout</a>{% endif %}</p>
+                    </div>
+                </div>
+				<div class="column">
+						{% if blogs %}
+							{% for blog in blogs %}
+								<div class="box">
+									<h2 class="title is-4">{{ blog.title }}</h2>
+									<h3 class="subtitle is-6">By {{ blog.name }} on {{ blog.date_created.strftime("%Y-%m-%d %H:%M") }}</h3>
+									<p><md-block>{{ blog.content }}</md-block></p><br>
+									<div class="tags">
+										<h6>Tags:</h6>
+										<span class="tag is-info"><a href="tags/python" style="color: white;">Python</a></span>  <!-- REDACT HERE FOR TAGS -->
+									</div>
+									{% if current_user.email == blog.email %}
+										<p><a href="/delete/{{ blog.id }}">Delete</a>  <a href="/update/{{ blog.id }}">Update</a></p>
+									{% endif %}
+								</div>
+							{% endfor %}
+						{% endif %}
 					</div>
 				</div>
 			</div>
-		</div>
 	</section>
 {% endblock %}
